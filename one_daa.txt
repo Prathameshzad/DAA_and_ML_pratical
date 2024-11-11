@@ -1,0 +1,39 @@
+def fibonacci(n, method="non-recursive"):
+    if method == "non-recursive":
+        # Non-recursive Fibonacci (Iterative)
+        fib_series = []
+        a, b = 0, 1
+        for _ in range(n):
+            fib_series.append(a)
+            a, b = b, a + b
+    elif method == "recursive":
+        # Recursive Fibonacci
+        fib_series = fibonacci_recursive(n)
+    return fib_series
+
+def fibonacci_recursive(n, fib_series=None):
+    # Initialize the series with the first two Fibonacci numbers
+    if fib_series is None:
+        fib_series = [0, 1]  # Start with 0, 1 for Fibonacci sequence
+    
+    # Base case: stop recursion when n is 1 or less
+    if n <= 1:
+        return fib_series[:n]  # If n is 0 or 1, return the appropriate slice
+    
+    # Recursively build the series up to n terms
+    fibonacci_recursive(n - 1, fib_series)
+    
+    # Append the next Fibonacci number based on the last two elements
+    fib_series.append(fib_series[-2] + fib_series[-1])
+    
+    return fib_series
+
+# Input handling and displaying the result
+n = int(input("Enter the number of terms for Fibonacci sequence: "))
+method = input("Choose method (recursive/non-recursive): ").strip().lower()
+
+# Get the Fibonacci series
+fib_series = fibonacci(n, method)
+
+# Display the Fibonacci series
+print(f"Fibonacci series ({method}) up to {n} terms: {fib_series}")

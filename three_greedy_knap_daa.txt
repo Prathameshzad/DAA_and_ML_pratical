@@ -1,0 +1,41 @@
+class Item:
+    def __init__(self, value, weight):
+        self.value = value
+        self.weight = weight
+        self.ratio = value / weight  # Calculate the value-to-weight ratio
+
+def fractional_knapsack(capacity, items):
+    # Sort the items by value-to-weight ratio in descending order
+    items.sort(key=lambda x: x.ratio, reverse=True)
+    
+    total_value = 0.0  # Variable to accumulate the total value of items added to the knapsack
+    
+    for item in items:
+        if capacity == 0:  # If the knapsack is full, break out of the loop
+            break
+        
+        if item.weight <= capacity:
+            # If the item can fit fully in the knapsack, take it whole
+            total_value += item.value
+            capacity -= item.weight
+        else:
+            # If the item can't fit fully, take the fraction that fits
+            total_value += item.ratio * capacity
+            break  # The knapsack is now full
+    
+    return total_value
+
+# Input: Number of items
+n = int(input("Enter number of items: "))
+
+# Input: Item details (value and weight)
+items = [
+    Item(float(input(f"Value of item {i + 1}: ")), float(input(f"Weight of item {i + 1}: ")))
+    for i in range(n)
+]
+
+# Input: Knapsack capacity
+capacity = float(input("Enter knapsack capacity: "))
+
+# Output: Maximum value that can be carried in the knapsack
+print(f"Maximum value: {fractional_knapsack(capacity, items)}")
